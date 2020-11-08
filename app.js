@@ -13,10 +13,14 @@ const app = express();
 
 app.set('view engine', 'ejs');
 
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded(
+{
+  extended: true
+}));
+
 app.use(express.static("public"));
 
-let posts= [];
+let posts = [];
 
 app.get("/", function(req, res)
 {
@@ -51,28 +55,22 @@ app.get("/compose", function(req, res)
 
 app.post("/compose", function(req, res)
 {
-  const post =
-  {
-    title:req.body.postTitle,
+  const post = {
+    title: req.body.postTitle,
     content: req.body.postBody
   };
-
 
   posts.push(post);
 
   res.redirect("/");
 });
 
+app.get("/posts/:postName", function(req, res)
+{
+  console.log(req.params.postName);
+})
 
-
-
-
-
-
-
-
-
-
-app.listen(3000, function() {
+app.listen(3000, function()
+{
   console.log("Server started on port 3000");
 });
